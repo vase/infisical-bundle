@@ -10,9 +10,17 @@ const proxyRules = new HttpProxyRules({
   default: 'http://localhost:3000' // default target
 });
 
-const proxy = httpProxy.createProxy({ ws: true, xfwd: true, headers: {
-  "Host": "infisical.corp.vase.ai"
-} })
+const proxy = httpProxy.createProxyServer({
+  ws: true,
+  xfwd: true,
+  headers: {
+    "Host": "infisical.corp.vase.ai",
+    "X-NginX-Proxy": "true"
+  },
+  cookiePathRewrite: {
+    "/": "/; secure; HttpOnly; SameSite=strict"
+  }
+})
 http.createServer((req, res) => {
   const target = proxyRules.match(req)
   if (target) return proxy.web(req, res, { target })
