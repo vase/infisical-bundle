@@ -20,7 +20,7 @@ WORKDIR /app
 COPY --chown=nginx:nginx --from=backend /app /app/backend
 COPY --chown=nginx:nginx --from=frontend /app /app/frontend
 RUN cd /app/frontend && npm i --platform=linux --arch=x64 --libc=musl sharp
-COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
+COPY --chown=nginx:nginx nginx.conf /etc/nginx/http.d/default.conf
 COPY ecosystem.config.js /app/ecosystem.config.js
 
 EXPOSE 8080
