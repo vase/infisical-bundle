@@ -32,3 +32,25 @@ primary_region = "sin"
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+
+[[services]]
+  http_checks = []
+  internal_port = 3000
+  processes = ["pm2"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 5000
+    soft_limit = 1000
+    type = "connections"
+
+[[services]]
+  http_checks = []
+  internal_port = 4000
+  processes = ["pm2"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 5000
+    soft_limit = 1000
+    type = "connections"
