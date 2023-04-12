@@ -4,22 +4,22 @@ FROM docker.io/infisical/frontend:${TAG} as frontend
 
 FROM docker.io/node:16-alpine as runner
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nodejs
+RUN addgroup --system --gid 1001 infisical
+RUN adduser --system --uid 1001 infisical
 
-RUN chown -R nodejs:nodejs $(npm config get prefix)/lib/node_modules
-RUN mkdir /app && chown -R nodejs:nodejs /app
+RUN chown -R infisical:infisical $(npm config get prefix)/lib/node_modules
+RUN mkdir /app && chown -R infisical:infisical /app
+RUN apk add --no-cache nginx
 RUN npm i -g pm2@5.3.0
-RUN chown -R nodejs:nodejs /usr/local/bin/pm2
+RUN chown -R infisical:infisical /usr/local/bin/pm2
 
-USER nodejs
+USER infisical
 WORKDIR /app
 
-COPY --chown=nodejs:nodejs --from=backend /app /app/backend
-COPY --chown=nodejs:nodejs --from=frontend /app /app/frontend
+COPY --chown=infisical:infisical --from=backend /app /app/backend
+COPY --chown=infisical:infisical --from=frontend /app /app/frontend
 RUN cd /app/frontend && npm i --platform=linux --arch=x64 --libc=musl sharp
-COPY --chown=nodejs:nodejs proxy /app/proxy
-RUN cd proxy && npm ci
+COPY --chown=infisical:infisical nginx.conf /etc/nginx/nginx.conf
 COPY ecosystem.config.js /app/ecosystem.config.js
 
 EXPOSE 8080
