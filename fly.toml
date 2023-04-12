@@ -1,16 +1,11 @@
 # fly.toml file generated for infisical-production on 2023-04-08T01:30:53+08:00
 
 app = "infisical-production"
-kill_signal = "SIGINT"
-kill_timeout = 5
 primary_region = "sin"
 [processes]
   web = "/usr/sbin/nginx -c /etc/nginx/nginx.conf"
   pm2 = "pm2-runtime /app/ecosystem.config.js"
 [env]
-
-[experimental]
-  auto_rollback = true
 
 [[services]]
   http_checks = []
