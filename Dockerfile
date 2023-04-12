@@ -16,7 +16,7 @@ RUN chown -R root:root /app
 ENV npm_config_cache /app/.npm
 RUN cd /app/frontend && npm i --unsafe-perm --platform=linux --arch=x64 --libc=musl sharp
 RUN rm -rf /app/.npm
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/http.d/default.conf
 COPY ecosystem.config.js /app/ecosystem.config.js
 
