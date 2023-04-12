@@ -6,6 +6,7 @@ FROM docker.io/node:16-alpine as runner
 
 RUN addgroup -g 101 -S nginx
 RUN adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx
+RUN mkdir /var/cache/nginx && chown -R nginx:nginx /var/cache/nginx
 
 RUN chown -R nginx:nginx $(npm config get prefix)/lib/node_modules
 RUN mkdir /app && chown -R nginx:nginx /app
