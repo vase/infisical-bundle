@@ -5,7 +5,7 @@ FROM docker.io/infisical/frontend:${TAG} as frontend
 FROM docker.io/node:16-alpine as runner
 
 RUN mkdir /app
-RUN apk add --no-cache nginx drill
+RUN apk add --no-cache nginx wget
 RUN npm i --unsafe-perm -g pm2@5.3.0
 
 WORKDIR /app
@@ -20,6 +20,12 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY default.conf /etc/nginx/http.d/default.conf
 COPY ecosystem.config.js /app/ecosystem.config.js
 
+WORKDIR /app
+
+RUN wget -O - https://github.com/DarthSim/hivemind/releases/download/v1.1.0/hivemind-v1.1.0-linux-amd64.gz | gunzip -c > hivemind
+RUN chmod +x ./hivemind
+COPY Procfile /app/Procfile
+
 EXPOSE 8080
 
-CMD ["pm2-runtime", "ecosystem.config.js"]
+CMD ["/app/hivemind", "/app/Procfile"]
