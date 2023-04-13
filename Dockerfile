@@ -5,7 +5,7 @@ FROM docker.io/infisical/frontend:${TAG} as frontend
 FROM docker.io/node:16-alpine as runner
 
 RUN mkdir /app
-RUN apk add --no-cache nginx
+RUN apk add --no-cache nginx drill
 RUN npm i --unsafe-perm -g pm2@5.3.0
 
 WORKDIR /app
