@@ -13,6 +13,8 @@ WORKDIR /app
 COPY --from=backend /app /app/backend
 COPY --from=frontend /app /app/frontend
 RUN chown -R root:root /app
+COPY set-telemetry.sh /app/frontend/scripts/set-telemetry.sh
+RUN /app/frontend/scripts/set-telemetry.sh
 ENV npm_config_cache /app/.npm
 RUN cd /app/frontend && npm i --unsafe-perm --platform=linux --arch=x64 --libc=musl sharp
 RUN rm -rf /app/.npm
