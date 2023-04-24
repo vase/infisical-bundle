@@ -2,7 +2,7 @@ ARG TAG=latest
 FROM docker.io/infisical/backend:${TAG} as backend
 FROM docker.io/infisical/frontend:${TAG} as frontend
 
-FROM docker.io/node:16-alpine as runner
+FROM docker.io/node:20-alpine as runner
 
 RUN mkdir /app
 RUN apk add --no-cache nginx wget
