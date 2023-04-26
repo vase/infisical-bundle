@@ -1,0 +1,12 @@
+# fly.toml file generated on 2023-04-08T01:30:53+08:00
+
+primary_region = "sin"
+[env]
+  NODE_ENV = "production"
+[http_service]
+  internal_port = 8080
+  force_https = true
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 1000
+    hard_limit = 5000
